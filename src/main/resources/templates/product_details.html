@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+        <title th:text="${product.name}"> - szczegóły produktu</title>
+</head>
+<body>
+
+    <div>
+        <h1 th:text="${product.name}"> - szczegóły</h1>
+        <ul>
+            <li>CENA:   <span th:text="${product.price}"></span> zł </li>
+            <li>OPIS:   <span th:text="${product.description}"></span></li>
+        </ul>
+    </div>
+
+    <div>
+        <h2> Wybierz ilość [formularz rozwijany] </h2>
+    </div>
+
+    <div>
+        <h2> dodaj do koszyka [wyslij]</h2>
+    </div>
+
+    <div>
+        <h2> edytuj produkt ---> do strony z formularzem do edycji produktu</h2>
+    </div>
+
+    <div>
+        <a href="/products/list"><h2> wróć do listy produktów</h2></a>
+    </div>
+
+</body>
+</html></title>
+</head>
+<body>
+
+</body>
+</html>
