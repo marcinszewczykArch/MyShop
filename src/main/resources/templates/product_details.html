@@ -11,19 +11,20 @@
         <ul>
             <li>CENA:   <span th:text="${product.price}"></span> zł </li>
             <li>OPIS:   <span th:text="${product.description}"></span></li>
+            <li>KATEGORIA:   <span th:text="${product.category}"></span></li>
         </ul>
     </div>
 
     <div>
-        <h2> Wybierz ilość [formularz rozwijany] </h2>
+        <h2> zamówienie</h2>
+        <form th:action="@{'/products/list/' + ${product.name} + '/addedToCart'}" method="post">
+            <p><input type="number" step="1" min="1" th:field="${addedItem.quantity}"> sztuk </p>
+            <p><input type="submit" value="DODAJ DO KOSZYKA"></p>
+        </form>
     </div>
 
     <div>
-        <h2> dodaj do koszyka [wyslij]</h2>
-    </div>
-
-    <div>
-        <h2> edytuj produkt ---> do strony z formularzem do edycji produktu</h2>
+        <a th:href="@{'/products/list/' + ${product.name} + '/edit'}"}><h2> edytuj informacje o produkcie</h2></a>
     </div>
 
     <div>

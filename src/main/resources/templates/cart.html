@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Twój koszyk</title>
+</head>
+<body>
+
+<div>
+    <ul th:each="item: ${items}">
+        <br>
+        <li>PRODUKT:   <span th:text="${item.product.name}"></span></li>
+        <li>CENA JEDNOSTKOWA:   <span th:text="${item.product.price}"></span></li>
+        <li>SZTUK:  <span th:text="${item.quantity}"></span></li>
+        <li>CENA WSZYTKICH SZTUK:  <span th:text="${item.getAmount()}"></span></li>
+        <br>
+    </ul>
+
+    <br><br>
+    <p>CENA TOTAL::  <span th:text="${totalCost}"></span></p>
+
+</div>
+
+<div>
+    <a href="/products/list"><h2> wróć do listy produktów</h2></a>
+</div>
+
+</body>
+</html>
