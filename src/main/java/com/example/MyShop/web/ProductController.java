@@ -1,6 +1,7 @@
 package com.example.MyShop.web;
 
 import com.example.MyShop.DAO.CartDAO;
+import com.example.MyShop.DAO.CategoryDAO;
 import com.example.MyShop.DAO.ProductDAO;
 import com.example.MyShop.model.Item;
 import com.example.MyShop.model.Product;
@@ -20,10 +21,15 @@ public class ProductController {
         this.productDAO = productDAO;
     }
 
-
     @GetMapping("/products/list")
-    protected String doGet(Model model) {
+    protected String showAllProducts(Model model) {
         model.addAttribute("products", productDAO.all());
+        return "products_list";
+    }
+
+    @GetMapping("/products/{category}")
+    protected String showProductsByCategory(@PathVariable("category") String category, Model model) {
+        model.addAttribute("products", productDAO.byCategory(category));
         return "products_list";
     }
 
@@ -54,36 +60,36 @@ public class ProductController {
 
     @PostMapping("/products/list/{name}/update/confirmed")
     public String inputChange(@PathVariable("name") String name, Model model) {
-        System.out.println("zmieniono nazwę: " + productDAO.byName(name).getName() + " na: " + replace.getName());
-        System.out.println("zmieniono opis: " + productDAO.byName(name).getDescription() + " na: " + replace.getDescription());
-        System.out.println("zmieniono cenę: " + productDAO.byName(name).getPrice() + " na: " + replace.getPrice());
-        System.out.println("zmieniono kategorię: " + productDAO.byName(name).getCategory() + " na: " + replace.getCategory());
-        productDAO.removeProductByName(name);
-        productDAO.addProduct(replace);
+        productDAO.replaceProduct(productDAO.byName(name),replace);
         model.addAttribute("products", productDAO.all());
         return "products_list";
     }
 
     @PostMapping("/products/list/{name}/addedToCart")
     public String addedToCart(@ModelAttribute Item addedItem, @PathVariable("name") String name, Model model) {
-            addedItem = new Item(productDAO.byName(name), addedItem.getQuantity());
-            cartDAO.addItem(addedItem);
+            if (cartDAO.getItemByProductName(name) == null) {
+                addedItem.setProduct(productDAO.byName(name));
+                cartDAO.addItem(addedItem);
+            } else {
+                if (addedItem.getQuantity() == 0) {
+                    cartDAO.removeItem(cartDAO.getItemByProductName(name));
+                } else {
+                    cartDAO.getItemByProductName(name).setQuantity(addedItem.getQuantity());
+                }
+            }
             model.addAttribute("addedItem", addedItem);
-            model.addAttribute("items", cartDAO.getAllItems());
-            model.addAttribute("totalCost", cartDAO.getTotal());
-            return "cart";
-    }
-
-    @GetMapping("/sorry")
-    public String error() {
-        return "errorMessage";
+            model.addAttribute("cartDAO", cartDAO);
+            return "redirect:/cart";//tu była zmiana z cart na redirect
     }
 
     @GetMapping("/cart")
-    protected String showCart(Model model) {
-        model.addAttribute("items", cartDAO.getAllItems());
-        model.addAttribute("totalCost", cartDAO.getTotal());
+    protected String showCart( Model model) {
+        model.addAttribute("cartDAO", cartDAO);
         return "cart";
+    }
+    @GetMapping("/sorry")
+    public String error() {
+        return "errorMessage";
     }
 
     private boolean checkNotEmpty(Product product) {
@@ -91,9 +97,4 @@ public class ProductController {
                 && (product.getDescription()!=null && product.getDescription().length()>0);
     }
 
-    private boolean checkNotEmpty(Item item) {
-        return (item.getProduct().getName()!=null && item.getProduct().getName().length()>0)
-                && (item.getProduct().getDescription()!=null && item.getProduct().getDescription().length()>0)
-                && (item.getQuantity()>0);
-    }
 }

@@ -1,0 +1,51 @@
+/* max szerokość kolumny 1200px i wyśrodkowanie */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* flexbox - kafelki mają zajmować tyle samo miejsca */
+.menu_buttons > ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap; /* dodane zawijanie */
+}
+
+/* kafelki mają wypełniać całą przestrzeń i być lekko przezroczyste */
+.menu_buttons > ul > li {
+    flex-grow: 1;
+    padding: 0.5rem;
+    font-weight: 500;
+    border: 2px solid;
+    color: white;
+    opacity: 0.8;
+}
+
+/* po najechaniu na kafelek usuwamy przezroczystość */
+.menu_buttons > ul > li:hover {
+    opacity: 1;
+}
+
+/* wyśrodkowanie tekstu na kafelkach i zmiana koloru linków */
+.menu_buttons > ul > li > a {
+    color: inherit;
+    display: block;
+    text-align: center;
+
+}
+
+/* kolor kafelków */
+.menu_buttons > ul > li:nth-child(3n) {
+    background-color: #FF2D55;
+}
+
+.menu_buttons > ul > li:nth-child(3n+1) {
+    background-color: #5856D6;
+}
+
+.menu_buttons > ul > li:nth-child(3n+2) {
+    background-color: #FF9500;
+}

@@ -11,6 +11,11 @@ import java.util.List;
 
 @Repository
 public class ProductDAO {
+    CategoryDAO categoryDAO;
+
+    public ProductDAO(CategoryDAO categoryDAO) {
+        this.categoryDAO = categoryDAO;
+    }
 
     private List<Product> products = new LinkedList<Product>(Arrays.asList(
             new Product("Jabłko", "bardzo słodkie, czerwone lub zielone", new BigDecimal("25.00"), "FRUIT"),
@@ -31,8 +36,15 @@ public class ProductDAO {
     }
 
     public void addProduct(Product product) {
-                products.add(product);
-            }
+        products.add(product);
+    }
+
+    public void replaceProduct(Product oldProduct, Product newProduct){
+        oldProduct.setName(newProduct.getName());
+        oldProduct.setDescription(newProduct.getDescription());
+        oldProduct.setPrice(newProduct.getPrice());
+        oldProduct.setCategory(newProduct.getCategory());
+    }
 
     public Product byName(String name) {
         for (Product product : products) {
@@ -43,12 +55,14 @@ public class ProductDAO {
         return null;
     }
 
-    public Product byCategory(String category) {
+    public List<Product> byCategory(String category) {
+        LinkedList productsByCategory = new LinkedList();
+
         for (Product product : products) {
             if (category.equals(product.getCategory())) {
-                return product;
+                productsByCategory.add(product);
             }
         }
-        return null;
+            return productsByCategory;
     }
 }

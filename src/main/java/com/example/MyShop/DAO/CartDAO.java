@@ -11,6 +11,7 @@ import java.util.List;
 
 @Repository
 public class CartDAO {
+    private final BigDecimal DISCOUNT_COEFFICIENT = new BigDecimal("0.9");
 
     private List<Item> items = new LinkedList<>();
 
@@ -37,6 +38,24 @@ public class CartDAO {
             }
         }
         return sum;
+    }
+
+    public BigDecimal getDiscountFor10ProductsOrMore() {
+        int totalQuantity = getTotalQuantity();
+        if (totalQuantity>=10) {
+            return getTotal().multiply(DISCOUNT_COEFFICIENT);
+        } else {
+            return getTotal();
+        }
+    }
+
+    public int getTotalQuantity() {
+        int totalQuantity = 0;
+
+        for (Item item : getAllItems()) {
+            totalQuantity = totalQuantity + item.getQuantity();
+        }
+        return totalQuantity;
     }
 
     public void addItem(Item item) {

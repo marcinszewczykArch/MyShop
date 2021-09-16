@@ -5,15 +5,23 @@ import java.util.List;
 
 public class Item {
 
-        private final Product product;
-        private final int quantity;
+        private Product product;
+        private int quantity;
 
         public Item(Product product, int quantity) {
             this.product = product;
             this.quantity = quantity;
         }
 
-        public Product getProduct() {
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public Product getProduct() {
             return product;
         }
 

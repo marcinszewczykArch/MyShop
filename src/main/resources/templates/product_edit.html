@@ -1,46 +1,38 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <header id="head" class="alt" th:include="STYLESHEETS :: stylesheet" />
     <meta charset="UTF-8" />
     <title th:text="${product.name} + ' - edycja'"></title>
 </head>
 <body>
-<div>
-    <h1 th:text="${product.name}"></h1>
-    <ul>
-        <li>CENA:   <span th:text="${product.price}"></span> zł </li>
-        <li>OPIS:   <span th:text="${product.description}"></span></li>
-        <li>KATEGORIA:   <span th:text="${product.category}"></span></li>
-    </ul>
-</div>
+    <header id="header" class="alt" th:include="MENU :: title-menu" />
+    <div class="container">
+        <h1 th:text="${product.name}"></h1>
+        <ul>
+            <li>CENA:   <span th:text="${product.price}"></span> zł </li>
+            <li>OPIS:   <span th:text="${product.description}"></span></li>
+            <li>KATEGORIA:   <span th:text="${product.category}"></span></li>
+        </ul>
 
-<div>
-    <form th:action="@{'/products/list/' + ${product.name} + '/update'}" method="post">
+        <form th:action="@{'/products/list/' + ${product.name} + '/update'}" method="post">
+            <p><input type="text" th:field="${editProduct.name}"></p>
+            <p><textarea th:field="${editProduct.description}"></textarea></p>
+            <p><input type="number" step="0.01" min="0" th:field="${editProduct.price}">zł</p>
 
-        <p><input type="text" th:field="${editProduct.name}"></p>
-        <p><textarea th:field="${editProduct.description}"></textarea></p>
-        <p><input type="number" step="0.01" min="0" th:field="${editProduct.price}">zł</p>
 
-        <div>
-            <input type="radio" id="VEGETABLE" name="category" th:field="${editProduct.category}" value="VEGETABLE">
-            <label for="VEGETABLE" text="VEGETABLE">VEGETABLE</label>
-        </div>
-        <div>
-            <input type="radio" id="FRUIT" name="category" th:field="${editProduct.category}" value="FRUIT">
-            <label for="VEGETABLE" text="FRUIT">FRUIT</label>
-        </div>
-        <p><input type="submit" value="UPDATE" /></p>
+                <input type="radio" id="VEGETABLE" name="category" th:field="${editProduct.category}" value="VEGETABLE">
+                <label for="VEGETABLE" text="VEGETABLE">VEGETABLE</label>
 
-    </form>
-</div>
+                <input type="radio" id="FRUIT" name="category" th:field="${editProduct.category}" value="FRUIT">
+                <label for="VEGETABLE" text="FRUIT">FRUIT</label>
 
-<div>
-    <a th:href="@{'/products/list/' + ${product.name}}"><h2> wróć do informaji o produkcie</h2></a>
-</div>
+            <p><input type="submit" value="UPDATE" /></p>
+        </form>
 
-<div>
-    <a href="/products/list"><h2> wróć do listy produktów</h2></a>
-</div>
+        <a th:href="@{'/products/list/' + ${product.name}}"><h2> wróć do informaji o produkcie</h2></a>
+    </div>
+
 
 </body>
 </html>
