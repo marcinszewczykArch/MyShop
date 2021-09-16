@@ -14,22 +14,26 @@ public class ProductController {
 
     private CartDAO cartDAO;
     private ProductDAO productDAO;
+    private CategoryDAO categoryDAO;
     Product replace;
 
-    public ProductController(CartDAO cartDAO, ProductDAO productDAO) {
+    public ProductController(CartDAO cartDAO, ProductDAO productDAO, CategoryDAO categoryDAO) {
         this.cartDAO = cartDAO;
         this.productDAO = productDAO;
+        this.categoryDAO = categoryDAO;
     }
 
     @GetMapping("/products/list")
     protected String showAllProducts(Model model) {
         model.addAttribute("products", productDAO.all());
+        model.addAttribute("categories", categoryDAO.getAllCategories());
         return "products_list";
     }
 
     @GetMapping("/products/{category}")
     protected String showProductsByCategory(@PathVariable("category") String category, Model model) {
         model.addAttribute("products", productDAO.byCategory(category));
+        model.addAttribute("categories", categoryDAO.getAllCategories());
         return "products_list";
     }
 
@@ -37,6 +41,7 @@ public class ProductController {
     protected String showProduct(@PathVariable("name") String name, Model model) {
         model.addAttribute("product", productDAO.byName(name));
         model.addAttribute("addedItem", new Item(productDAO.byName(name), 0));
+        model.addAttribute("categories", categoryDAO.getAllCategories());
         return "product_details";
     }
 
@@ -44,6 +49,7 @@ public class ProductController {
     protected String editProduct(@PathVariable("name") String name, Model model) {
         model.addAttribute("product", productDAO.byName(name));
         model.addAttribute("editProduct", new Product(productDAO.byName(name).getName(), productDAO.byName(name).getDescription(), productDAO.byName(name).getPrice(), productDAO.byName(name).getCategory()));
+        model.addAttribute("categories", categoryDAO.getAllCategories());
         return "product_edit";
     }
 
@@ -52,6 +58,7 @@ public class ProductController {
         if(checkNotEmpty(editProduct)) {
             model.addAttribute("editProduct", editProduct);
             model.addAttribute("product", productDAO.byName(name));
+            model.addAttribute("categories", categoryDAO.getAllCategories());
             replace = new Product(editProduct.getName(), editProduct.getDescription(), editProduct.getPrice(), editProduct.getCategory());
             return "update_success";
         } else
@@ -62,6 +69,7 @@ public class ProductController {
     public String inputChange(@PathVariable("name") String name, Model model) {
         productDAO.replaceProduct(productDAO.byName(name),replace);
         model.addAttribute("products", productDAO.all());
+        model.addAttribute("categories", categoryDAO.getAllCategories());
         return "products_list";
     }
 
@@ -92,7 +100,7 @@ public class ProductController {
         return "errorMessage";
     }
 
-    private boolean checkNotEmpty(Product product) {
+    public static boolean checkNotEmpty(Product product) {
         return (product.getName()!=null && product.getName().length()>0)
                 && (product.getDescription()!=null && product.getDescription().length()>0);
     }

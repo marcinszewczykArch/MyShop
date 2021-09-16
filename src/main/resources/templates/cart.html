@@ -13,7 +13,7 @@
     <ul th:each="item: ${cartDAO.getAllItems()}">
         <br>
         <li>PRODUKT:   <span th:text="${item.product.name}"></span></li>
-        <li>KATEGORIA:   <span th:text="${item.product.category}"></span></li>
+        <li>KATEGORIA:   <span th:text="${item.product.category.name}"></span></li>
         <li>CENA JEDNOSTKOWA:   <span th:text="${item.product.price}"></span></li>
         <li>SZTUK:  <span th:text="${item.quantity}"></span></li>
 

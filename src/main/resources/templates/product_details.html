@@ -8,12 +8,14 @@
 <body>
     <header id="header" class="alt" th:include="MENU :: title-menu" />
 
+    <div id="div" class="alt" th:include="MENU_CATEGORIES :: category-menu" />
+
     <div class="container">
         <h1 th:text="${product.name}"> - szczegóły</h1>
         <ul>
             <li>CENA:   <span th:text="${product.price}"></span> zł </li>
             <li>OPIS:   <span th:text="${product.description}"></span></li>
-            <li>KATEGORIA:   <span th:text="${product.category}"></span></li>
+            <li>KATEGORIA:   <span th:text="${product.category.name}"></span></li>
         </ul>
 
         <h2>zamówienie</h2>

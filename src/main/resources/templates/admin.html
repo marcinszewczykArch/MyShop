@@ -2,21 +2,15 @@
 
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<header id="head" class="alt" th:include="STYLESHEETS :: stylesheet" />
+    <header id="head" class="alt" th:include="STYLESHEETS :: stylesheet" />
     <title>PANEL ADMINA</title>
 </head>
 <body>
-<header id="header" class="alt" th:include="MENU :: title-menu" />
+    <header id="header" class="alt" th:include="MENU :: title-menu" />
+    <div id="div" class="alt" th:include="MENU_ADMIN :: admin-menu" />
 
-<div class="container">
-
-    <ul>
-        <li><a href="/admin_list"><h2>EDYTUJ ISTNIEJĄCY PRODUKT</h2></a></li>
-        <li><a href="/admin_add_product"><h2>DODAJ NOWY PRODUKT</h2></a></li>
-        <li><a href="/admin_categories"><h2>EDYTUJ ISTNIEJĄCĄ KATEGORIĘ</h2></a></li>
-        <li><a href="/admin_add_category"><h2>DODAJ NOWĄ KATEGORIĘ</h2></a></li>
-    </ul>
-
-</div>
+    <div class="container">
+        <a>To jest panel dostępny tylko dla ADMINISTRATORA!</a>
+    </div>
 </body>
 </html>

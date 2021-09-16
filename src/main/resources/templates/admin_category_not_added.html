@@ -10,10 +10,7 @@
     <div id="div" class="alt" th:include="MENU_ADMIN :: admin-menu" />
 
     <div class="container">
-        <form th:action="@{'/admin/add_category/' + ${newCategory.name}}" method="post">
-            <p><input type="text" th:field="${newCategory.name}"></p>
-            <p><input type="submit" value="DODAJ KATEGORIĘ" /></p>
-        </form>
+        <span th:text="${newCategory.name}"></span> - kategoria dodana
     </div>
 </body>
 </html>

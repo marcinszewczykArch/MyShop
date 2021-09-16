@@ -1,6 +1,7 @@
 package com.example.MyShop.DAO;
 
 
+import com.example.MyShop.model.Category;
 import com.example.MyShop.model.Product;
 import org.springframework.stereotype.Repository;
 
@@ -11,16 +12,12 @@ import java.util.List;
 
 @Repository
 public class ProductDAO {
-    CategoryDAO categoryDAO;
-
-    public ProductDAO(CategoryDAO categoryDAO) {
-        this.categoryDAO = categoryDAO;
-    }
 
     private List<Product> products = new LinkedList<Product>(Arrays.asList(
-            new Product("Jabłko", "bardzo słodkie, czerwone lub zielone", new BigDecimal("25.00"), "FRUIT"),
-            new Product("Ziemniak", "Jabłko wśród warzyw", new BigDecimal("99.99"), "VEGETABLE"),
-            new Product("Ogórek", "zielony, gruntowy", new BigDecimal("5.50"), "VEGETABLE")));
+            new Product("Jabłko", "bardzo słodkie, czerwone lub zielone", new BigDecimal("25.00"), new Category("OWOCE")),
+            new Product("Ziemniak", "Jabłko wśród warzyw", new BigDecimal("99.99"), new Category("WARZYWA")),
+            new Product("Orzech włoski", "Dobry na pamięć", new BigDecimal("29.99"), new Category("ORZECHY")),
+            new Product("Ogórek", "zielony, gruntowy", new BigDecimal("5.50"), new Category("WARZYWA"))));
 
     public List<Product> all() {
         return products;
@@ -59,7 +56,7 @@ public class ProductDAO {
         LinkedList productsByCategory = new LinkedList();
 
         for (Product product : products) {
-            if (category.equals(product.getCategory())) {
+            if (category.equals(product.getCategory().getName())) {
                 productsByCategory.add(product);
             }
         }

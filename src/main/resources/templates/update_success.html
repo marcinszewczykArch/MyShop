@@ -13,14 +13,12 @@
         <ul>
             <li>CENA:   <span th:text="${editProduct.price}"></span> zł <s th:text="${product.price}"></s></li>
             <li>OPIS:   <span th:text="${editProduct.description}"></span> <s th:text="${product.description}"></s></li>
-            <li>KATEGORIA:   <span th:text="${editProduct.category}"></span> <s th:text="${product.category}"></s></li>
+            <li>KATEGORIA:   <span th:text="${editProduct.category.name}"></span> <s th:text="${product.category.name}"></s></li>
         </ul>
 
     <form th:action="@{'/products/list/' + ${product.name} + '/update/confirmed'}" method="post">
         <p><input type="submit" value="ZATWIERDŹ ZMIANY" /></p>
     </form>
-
-        <a href="/products/list"><h2> wróć do listy produktów</h2></a>
     </div>
 </body>
 </html>

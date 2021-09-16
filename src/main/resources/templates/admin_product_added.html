@@ -3,17 +3,14 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <header id="head" class="alt" th:include="STYLESHEETS :: stylesheet" />
-    <title>PANEL ADMINA - DODAJ KATEGORIĘ</title>
+    <title>PANEL ADMINA - DODAJ PRODUKT</title>
 </head>
 <body>
     <header id="header" class="alt" th:include="MENU :: title-menu" />
     <div id="div" class="alt" th:include="MENU_ADMIN :: admin-menu" />
 
     <div class="container">
-        <form th:action="@{'/admin/add_category/' + ${newCategory.name}}" method="post">
-            <p><input type="text" th:field="${newCategory.name}"></p>
-            <p><input type="submit" value="DODAJ KATEGORIĘ" /></p>
-        </form>
+        <span th:text="${newProduct.name}"></span> - kategoria o takiej nazwie już istnieje. Skorzytaj z panelu edycji istniejących kategorii
     </div>
 </body>
 </html>
